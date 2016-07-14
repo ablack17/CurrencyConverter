@@ -11,6 +11,14 @@
 
 @interface ViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UIPickerView *homePicker;
+@property (weak, nonatomic) IBOutlet UIPickerView *foreignPicker;
+@property (weak, nonatomic) IBOutlet UITextField *homeField;
+@property (weak, nonatomic) IBOutlet UITextField *foreignField;
+- (IBAction)switchButton:(id)sender;
+- (IBAction)refreshButton:(id)sender;
+
+
 
 @end
 

@@ -24,4 +24,12 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)switchButton:(id)sender {
+    NSLog(@"Switching");
+}
+- (IBAction)refreshButton:(id)sender {
+    NSLog(@"refreshing");
+    
+    
+}
 @end

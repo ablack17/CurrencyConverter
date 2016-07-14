@@ -15,6 +15,7 @@
 		56F876901D353E5900224D41 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 56F8768E1D353E5900224D41 /* LaunchScreen.storyboard */; };
 		56F8769F1D36873000224D41 /* ExchangeRate.m in Sources */ = {isa = PBXBuildFile; fileRef = 56F8769E1D36873000224D41 /* ExchangeRate.m */; };
 		56F876A21D36880000224D41 /* Currency.m in Sources */ = {isa = PBXBuildFile; fileRef = 56F876A11D36880000224D41 /* Currency.m */; };
+		56F876A51D36D14000224D41 /* URLFetcherExample.m in Sources */ = {isa = PBXBuildFile; fileRef = 56F876A41D36D14000224D41 /* URLFetcherExample.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,8 @@
 		56F8769E1D36873000224D41 /* ExchangeRate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ExchangeRate.m; path = ../ExchangeRate.m; sourceTree = "<group>"; };
 		56F876A01D36880000224D41 /* Currency.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Currency.h; path = ../Currency.h; sourceTree = "<group>"; };
 		56F876A11D36880000224D41 /* Currency.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Currency.m; path = ../Currency.m; sourceTree = "<group>"; };
+		56F876A31D36D14000224D41 /* URLFetcherExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = URLFetcherExample.h; sourceTree = "<group>"; };
+		56F876A41D36D14000224D41 /* URLFetcherExample.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = URLFetcherExample.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +67,8 @@
 		56F8767F1D353E5900224D41 /* Currency Converter */ = {
 			isa = PBXGroup;
 			children = (
+				56F876A31D36D14000224D41 /* URLFetcherExample.h */,
+				56F876A41D36D14000224D41 /* URLFetcherExample.m */,
 				56F8769D1D36873000224D41 /* ExchangeRate.h */,
 				56F8769E1D36873000224D41 /* ExchangeRate.m */,
 				56F876A01D36880000224D41 /* Currency.h */,
@@ -159,6 +164,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				56F876A51D36D14000224D41 /* URLFetcherExample.m in Sources */,
 				56F876881D353E5900224D41 /* ViewController.m in Sources */,
 				56F876851D353E5900224D41 /* AppDelegate.m in Sources */,
 				56F8769F1D36873000224D41 /* ExchangeRate.m in Sources */,

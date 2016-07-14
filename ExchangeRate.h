@@ -14,6 +14,8 @@
 @property (strong, nonatomic) Currency* foreign;
 @property (strong, nonatomic) NSNumber* rate;
 @property (strong, nonatomic) NSDate* expiresOn;
+@property (strong) NSMutableDictionary *completionHandlerDictionary;
+@property (strong) NSURLSessionConfiguration *ephemeralConfigObject;
 
 -(bool) updateRate;
 -(NSString*) exchangeToHome: (NSNumber*)value;
@@ -22,8 +24,8 @@
 -(NSString*) name;
 -(NSString*) description;
 
--(ExchangeRate*) initWithHome:(Currency*) aHome
-                      foreign: (Currency*) aForeign;
+-(ExchangeRate*) initWithHome:(NSString*) aHome
+                      Aforeign: (NSString*) aForeign;
 
 
 
