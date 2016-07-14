@@ -56,29 +56,36 @@
 }
 
 
-- (IBAction)switchButton:(id)sender {
+- (IBAction)refreshButton:(id)sender {
+    NSLog(@"refreshing");
+    
+    
+}
+
+- (IBAction)switch:(id)sender {
+    
     NSString * homeString = [self.homePicker.delegate pickerView:self.homePicker titleForRow:[self.homePicker selectedRowInComponent:0] forComponent:0];
     NSString* foreignString = [self.foreignPicker.delegate pickerView:self.foreignPicker titleForRow:[self.foreignPicker selectedRowInComponent:0] forComponent:0];
     
     
-    for(int i = 0; i <= self.moneys.count; i++)
+    for(int i = 0; i < self.moneys.count; i++)
+        
     {
-        if([homeString isEqualToString:self.moneys[i]] == YES)
+        
+        Currency* yay =self.moneys[i];
+        if([homeString isEqualToString:yay.alphaCode] == YES)
         {
             [self.foreignPicker selectRow:i inComponent:0 animated:YES];
             
         }
-        if([foreignString isEqualToString:self.moneys[i]] == YES)
+        if([foreignString isEqualToString:yay.alphaCode] == YES)
         {
             [self.homePicker selectRow:i inComponent:0 animated:YES];
             
         }
     }
-}
-- (IBAction)refreshButton:(id)sender {
-    NSLog(@"refreshing");
-    
-    
+    [self.homePicker reloadAllComponents];
+    [self.foreignPicker reloadAllComponents];
 }
 
 
