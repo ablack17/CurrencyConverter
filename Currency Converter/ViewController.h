@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "Currency.h"
 
 @interface ViewController : UIViewController
 
@@ -18,7 +18,7 @@
 - (IBAction)switchButton:(id)sender;
 - (IBAction)refreshButton:(id)sender;
 
-
+@property (strong, nonatomic) NSMutableArray* moneys;
 
 @end
 
