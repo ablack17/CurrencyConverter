@@ -39,12 +39,6 @@
     NSString* foreignString = [self.foreignPicker.delegate pickerView:self.foreignPicker titleForRow:[self.foreignPicker selectedRowInComponent:0] forComponent:0];
     self.er = [[ExchangeRate alloc] initWithHome: homeString Aforeign: foreignString];
     
-    //NSString *testing = @"https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.xchange%20where%20pair%20in%20(%22";
-    //NSString *testingTwo = @"%22)&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=";
-    
-    //NSString* urlString = [NSString stringWithFormat:@"%@%@%@%@", testing, self.er.home.alphaCode, self.er.foreign.alphaCode, testingTwo];
-    //NSString* urlString = [NSString stringWithFormat: @"https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.xchange%20where%20pair%20in%20(%22%@%@%22)&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=", self.er.home.alphaCode, self.er.foreign.alphaCode];
-    
     NSString* urlString = [NSString stringWithFormat: @"https://query.yahooapis.com/v1/public/yql?q=select%%20*%%20from%%20yahoo.finance.xchange%%20where%%20pair%%20in%%20(%%22%@%@%%22)&format=json&env=store%%3A%%2F%%2Fdatatables.org%%2Falltableswithkeys&callback=", homeString, foreignString];
     for(int i = 0; i < self.moneys.count; i++)
     {
@@ -74,10 +68,19 @@
                                                         if( [obj isKindOfClass: [NSDictionary class]] ){
                                                             NSDictionary *dict = (NSDictionary*)obj;
                                                             NSLog(@"%@", [dict description]);
-                                                            NSDictionary* results = [dict objectForKey: @"results"];
+                                                            NSDictionary* query = [dict objectForKey:@"query"];
+                                                            
+                                                             NSLog(@"%@", [dict description]);
+                                                            
+                                                            NSDictionary* results = [query objectForKey: @"results"];
+                                                            NSLog(@"%@", [results description]);
                                                             NSDictionary* rate = [results objectForKey:@"rate"];
                                                             NSString* theExchangeRate = [rate objectForKey: @"Rate"];
+                                                             NSLog(@"%@", theExchangeRate);
+                                                            //NSString* theExchangeRate = [rate objectForKey: @"Rate"];
                                                             self.er.rate = @(theExchangeRate.floatValue);
+                                                            NSLog(@"%@", self.er.rate.stringValue);
+                                                            //NSLog([NSString stringWithFormat:@"%@", theExchangeRate]);
                                                         }else{
                                                             NSLog(@"Not a dictionary.");
                                                             exit(1);}}
