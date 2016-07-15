@@ -45,8 +45,7 @@
     //NSString* urlString = [NSString stringWithFormat:@"%@%@%@%@", testing, self.er.home.alphaCode, self.er.foreign.alphaCode, testingTwo];
     //NSString* urlString = [NSString stringWithFormat: @"https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.xchange%20where%20pair%20in%20(%22%@%@%22)&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=", self.er.home.alphaCode, self.er.foreign.alphaCode];
     
-    NSString* urlString = [NSString stringWithFormat: @"https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.xchange%20where%20pair%20in%20(%22%@%@%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=", self.er.home.alphaCode, self.er.foreign.alphaCode];
-
+    NSString* urlString = [NSString stringWithFormat: @"https://query.yahooapis.com/v1/public/yql?q=select%%20*%%20from%%20yahoo.finance.xchange%%20where%%20pair%%20in%%20(%%22%@%@%%22)&format=json&env=store%%3A%%2F%%2Fdatatables.org%%2Falltableswithkeys&callback=", homeString, foreignString];
     for(int i = 0; i < self.moneys.count; i++)
     {
         
@@ -77,7 +76,7 @@
                                                             NSLog(@"%@", [dict description]);
                                                             NSDictionary* results = [dict objectForKey: @"results"];
                                                             NSDictionary* rate = [results objectForKey:@"rate"];
-                                                            NSString* theExchangeRate = [rate objectForKey: @"rate"];
+                                                            NSString* theExchangeRate = [rate objectForKey: @"Rate"];
                                                             self.er.rate = @(theExchangeRate.floatValue);
                                                         }else{
                                                             NSLog(@"Not a dictionary.");
