@@ -14,6 +14,7 @@
 @synthesize completionHandlerDictionary;
 @synthesize ephemeralConfigObject;
 
+
 -(ExchangeRate*) initWithHome: (NSString*) aHome Aforeign: (NSString*) aForeign
 {
     self = [super init];
@@ -23,6 +24,7 @@
     }
     return self;
 }
+
 - (void)encodeWithCoder:(NSCoder *)coder
 {
     //[super encodeWithCoder:coder];

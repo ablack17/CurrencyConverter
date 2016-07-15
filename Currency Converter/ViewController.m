@@ -17,6 +17,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    //ExchangeRate* er = [[ExchangeRate alloc]init];
+    self.er.completionHandlerDictionary = [NSMutableDictionary dictionaryWithCapacity:0];
+    self.er.ephemeralConfigObject = [NSURLSessionConfiguration ephemeralSessionConfiguration];
     self.moneys = [[NSMutableArray alloc] init];
     [self.moneys addObject: [[Currency alloc] initWithName: @"US Dollars" AlphaCode: @"USD" symbol: @"$" decimalPlaces: [NSNumber numberWithInt:2]]];
     [self.moneys addObject: [[Currency alloc] initWithName: @"EU Euros" AlphaCode: @"EUR" symbol: @"€" decimalPlaces: [NSNumber numberWithInt:2]]];
@@ -30,6 +33,64 @@
     self.foreignPicker.delegate = self;
 }
 
+-(void) getRate
+{
+    NSString * homeString = [self.homePicker.delegate pickerView:self.homePicker titleForRow:[self.homePicker selectedRowInComponent:0] forComponent:0];
+    NSString* foreignString = [self.foreignPicker.delegate pickerView:self.foreignPicker titleForRow:[self.foreignPicker selectedRowInComponent:0] forComponent:0];
+    self.er = [[ExchangeRate alloc] initWithHome: homeString Aforeign: foreignString];
+    
+    //NSString *testing = @"https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.xchange%20where%20pair%20in%20(%22";
+    //NSString *testingTwo = @"%22)&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=";
+    
+    //NSString* urlString = [NSString stringWithFormat:@"%@%@%@%@", testing, self.er.home.alphaCode, self.er.foreign.alphaCode, testingTwo];
+    //NSString* urlString = [NSString stringWithFormat: @"https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.xchange%20where%20pair%20in%20(%22%@%@%22)&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=", self.er.home.alphaCode, self.er.foreign.alphaCode];
+    
+    NSString* urlString = [NSString stringWithFormat: @"https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.xchange%20where%20pair%20in%20(%22%@%@%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=", self.er.home.alphaCode, self.er.foreign.alphaCode];
+
+    for(int i = 0; i < self.moneys.count; i++)
+    {
+        
+        Currency* yay =self.moneys[i];
+        if([homeString isEqualToString:yay.alphaCode] == YES)
+        {
+            self.er.home = yay;
+            
+        }
+        if([foreignString isEqualToString:yay.alphaCode] == YES)
+        {
+            
+            self.er.foreign = yay;
+        }
+    }
+    NSOperationQueue *mainQueue = [NSOperationQueue mainQueue];
+    NSURLSession *delegateFreeSession = [NSURLSession sessionWithConfiguration: self.er.ephemeralConfigObject delegate: nil delegateQueue: mainQueue];
+   
+        NSLog(@"dispatching %@", [self.er description]);
+    NSURLSessionTask* task = [delegateFreeSession dataTaskWithURL: [NSURL URLWithString: urlString]
+                                                completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                                                        NSLog(@"Got response %@ with error %@.\n", response, error);
+                                                        id obj = [NSJSONSerialization JSONObjectWithData: data
+                                                                                                 options: 0
+                                                                                                   error: nil];
+                                                        if( [obj isKindOfClass: [NSDictionary class]] ){
+                                                            NSDictionary *dict = (NSDictionary*)obj;
+                                                            NSLog(@"%@", [dict description]);
+                                                            NSDictionary* results = [dict objectForKey: @"results"];
+                                                            NSDictionary* rate = [results objectForKey:@"rate"];
+                                                            NSString* theExchangeRate = [rate objectForKey: @"rate"];
+                                                            self.er.rate = @(theExchangeRate.floatValue);
+                                                        }else{
+                                                            NSLog(@"Not a dictionary.");
+                                                            exit(1);}}
+                                                            
+                                                        
+
+                              ];[task resume];
+                                                            
+                                                    
+    
+}
+                                                        
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -68,8 +129,7 @@
     NSString* foreignString = [self.foreignPicker.delegate pickerView:self.foreignPicker titleForRow:[self.foreignPicker selectedRowInComponent:0] forComponent:0];
     
     
-    for(int i = 0; i < self.moneys.count; i++)
-        
+    for(int i = 0; i < self.moneys.count; i ++)
     {
         
         Currency* yay =self.moneys[i];
@@ -89,4 +149,13 @@
 }
 
 
+- (IBAction)calculate:(id)sender {
+    
+    [self getRate];
+    NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
+    f.numberStyle = NSNumberFormatterDecimalStyle;
+    //NSNumber *myNumber = [f numberFromString:@"42"];
+    NSString* exchanged = [self.er exchangeToHome: [f numberFromString: self.homeField.text]];
+    self.foreignField.text = exchanged;
+}
 @end
